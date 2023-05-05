@@ -1,0 +1,20 @@
+new PVector(-58.27464, -37.8932134),
+  new PVector(-58.27765, -37.8964),
+  new PVector(-58.2754, -37.894),
+  new PVector(-58.2766, -37.8957727),
+  new PVector(-58.2783, -37.89676),
+  new PVector(-58.27599, -37.8949),
+  new PVector(-58.27378, -37.89297),
+  new PVector(-58.2736595, -37.89359),
+  new PVector(-58.27331, -37.89429),
+  new PVector(-58.273455, -37.8946),
+  new PVector(-58.2727, -37.8945),
+  new PVector(-58.2732, -37.8946);
+
+0 + PI * 0.7;
+2.237 - PI * 0.7; //trigal
+5.982 + PI * 0.5;
+2.237 + PI * 0.5;
+2.237 - PI * 0.4; //el del final sierra chata desde descampado
+2.237;
+PI * 0.4 - 2.237 - PI * 0.5 - 2.237 - 2.237 - PI * 0.3 - 2.237 - 2.237 - PI * 0.3;

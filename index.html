@@ -1,10 +1,288 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<title>Location-based AR.js with three.js</title>
-<script type='module' src='dist/bundle.js'></script>
+    <meta charset="utf-8" />
+    <!-- <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="Expires" content="-1"> -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> -->
+    <style>
+        html,
+        body {
+            height: 100%;
+            background-color: black;
+            /* display: flex;
+            align-items: center;
+            justify-content: center; */
+        }
+            
+        button {
+            background-color: rgb(219, 219, 219);
+          
+            /* margin-left: 5px;
+            margin-right: 1px; */
+        }
+        i {
+            background-color: white;
+            border-radius: 50%;
+            border: 1px solid grey;
+            padding: 10px;
+        }
+        button {
+            background-color: white;
+            border-radius: 50%;
+            border: 1px solid grey;
+            /* padding: 10px; */
+            /* margin-top: 15px; */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* height: 180px;
+                width: 180px; */
+        }
+        #descripcionCuadro {
+            border: 2px solid rgb(94, 92, 92);
+            border-radius: 40px;
+            background-color: rgb(42, 39, 39);
+            /* width: 90%;
+            height: 80%; */
+            position: absolute;
+            flex-direction: column;
+            display: flex;
+            /* top: 0px;
+            left: 0px; */
+            /* margin: 5% 5%; */
+            align-items: center;
+
+            min-height: 100px;
+            overflow: hidden;
+            padding: 2%;
+
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+        .descripcion {   
+            display: flex;
+            flex-direction: column;         
+            justify-content: center;
+            margin-top: 35px;
+        }
+        .titulo {
+            display: flex;
+        }
+        .linea{
+            display: flex;
+            font-size: 25px;
+            color: antiquewhite;
+        }
+        .negra{
+            font-weight: bold;
+            margin-right:10px;
+        }
+        .icono{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        button{        
+            /* height: 140px;
+            width: 140px;
+            margin: 0px 40px; */
+            height: 20vw;
+            width: 20vw;
+            margin: 0px 4vw;
+        }
+        i {
+            height:  11vw;
+            width:  11vw;
+        }
+        .icono{
+            font-size: 12vw;
+        }  
+
+        @media (orientation: landscape) {
+            button{        
+                /* height: 140px;
+                width: 140px;
+                margin: 0px 40px; */
+                height: 20vh;
+                width: 20vh;
+                margin: 0px 4vh;
+            }
+            i {
+                height:  11vh;
+                width:  11vh;
+            }
+            .icono{
+                font-size: 12vh;
+            }  
+        }
+
+        /* @media screen and ((max-width: 600px) or (max-height: 600px)) {
+            button{        
+                height: 120px;
+                width: 120px;
+                
+            }
+            i {
+                height: 25px;
+                width: 25px;
+            }
+            .icono{
+                font-size: 24px;
+            }
+        } */
+        /* @media screen and ((max-width: 600px) or (max-height: 600px)) {
+            button{        
+                height: 60px;
+                width: 60px;
+               
+            }
+            i {
+                height: 25px;
+                width: 25px;
+            }
+            .icono{
+                font-size: 24px;
+            }
+        } */
+        /* @media only screen and (orientation: landscape) {
+            button {
+                background-color: lightblue;
+            }
+        } */
+    </style>
 </head>
+
 <body>
-<canvas id='canvas1' style='background-color: black; width: 100%; height: 100%'></canvas>
+    <video id="video1" autoplay playsinline style="display:none"></video>
+    <canvas id="canvas1" style='background-color: rgb(0, 0, 0); width:100%; height:100%; display:block'></canvas>
+
+    <!-- <div id="descripcionCuadro" style="display:none;">
+        <div class="titulo"> 
+            <button id="cerrarDesc"><i  class="material-icons icono">close</i></button>
+        </div>
+        <div class="descripcion"> 
+            <div class="linea"> 
+                <div class="negra">Artista: </div> <div id="artistaCuadro"> "Erbeta"</div>
+            </div>
+            <div class="linea"> 
+                <div class="negra">Nombre: </div>  <div id="nombreCuadro"> "Puerta del abra"</div>
+            </div>
+            <div class="linea"> 
+                <div class="negra">Tamaño: </div>  <div id="tamCuadro"> "67x49"</div>
+            </div>
+            <div class="linea"> 
+                <div class="negra">Tipo: </div>  <div id="tipoCuadro"> "óleo sobre tela"</div>
+            </div> 
+        </div>
+    </div> -->
+    <script src='./three/three.js'></script>
+   
+    <!-- <script src="./three/threear.js"></script> -->
+    
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/three.js/build/ar-threex-location-only.js"></script>
+    <script type='module' src="index.js"></script>
+    
+
+    <!-- <script>
+        var canvas = document.getElementById('canvas1');
+        var context = canvas.getContext('2d');
+
+        // begin custom shape
+        context.beginPath();
+        context.moveTo(170, 80);
+        context.bezierCurveTo(130, 100, 130, 150, 230, 150);
+        context.bezierCurveTo(250, 180, 320, 180, 340, 150);
+        context.bezierCurveTo(420, 150, 420, 120, 390, 100);
+        context.bezierCurveTo(430, 40, 370, 30, 340, 50);
+        context.bezierCurveTo(320, 5, 250, 20, 250, 50);
+        context.bezierCurveTo(200, 5, 150, 20, 170, 80);
+
+        // complete custom shape
+        context.closePath();
+        context.lineWidth = 5;
+        context.strokeStyle = 'blue';
+        context.stroke();
+    </script> -->
+
+    <!-- <script type="text/javascript" src="./reimg.js"></script>
+    <script type="text/javascript">
+        function downloadCanvasAsPng() {
+            console.log('*******');
+            // console.log(getNombre());
+            ReImg.fromCanvas(document.querySelector('canvas')).downloadPng();
+        }
+    </script> -->
+    <a id="botonPermisos" style="position: absolute;display: flex; justify-content: center; bottom: 7vw; width: 100%;">
+        <button id="botPermiso" type="button" ><i id="share_location" class="material-icons icono">share_location</i></button>
+    </a>;
+    <!-- <a id="botones" style="position: absolute;display: none; justify-content: center; bottom: 7vw; width: 100%;">
+        <button id="botCamara" type="button" onClick="downloadCanvasAsPng()"><i id="iconoCamara" class="material-icons icono">photo_camera</i></button>
+        <button id="goFS"><i id="iconoPantalla" class="material-icons icono">fullscreen</i></button>
+    </a>; -->
+    <!-- <a style="position: absolute;top: 40; display: flex; justify-content: center; bottom: 40px; width: 100%;">
+    
+</a>; -->
+    <!-- <script>
+    var cerrarDesc = document.getElementById('cerrarDesc');
+    var descCuadro = document.getElementById('descripcionCuadro');
+    cerrarDesc.addEventListener(
+        'click',
+        function (){
+            console.log('asdasdasdasdklkkl')
+            descCuadro.style.display = 'none';
+        }
+    );
+    window.fullscreen = false;
+    var goFS = document.getElementById('goFS');
+    goFS.addEventListener(
+        'click',
+        function () {
+            if(window.fullscreen){
+                var icono = document.getElementById('iconoPantalla');
+                var iconoCam = document.getElementById('iconoCamara');
+                var btnCam = document.getElementById('botCamara');
+                icono.innerText = "fullscreen"
+                document.exitFullscreen();
+                window.fullscreen = false;
+                // goFS.style.height = '140px';
+                // goFS.style.width = '140px';
+                // icono.style.height = '90px';
+                // icono.style.width = '90px';
+                // icono.style.fontSize = '70px';
+                // btnCam.style.height = '140px';
+                // btnCam.style.width = '140px';
+                // iconoCam.style.height = '90px';
+                // iconoCam.style.width = '90px';
+                // iconoCam.style.fontSize = '70px';
+            }else{
+                var icono = document.getElementById('iconoPantalla');
+                var iconoCam = document.getElementById('iconoCamara');
+                var btnCam = document.getElementById('botCamara');
+                icono.innerText = "fullscreen_exit"
+                document.body.requestFullscreen();
+                window.fullscreen = true;
+                // goFS.style.height = '90px';
+                // goFS.style.width = '90px';
+                // icono.style.height = '70px';
+                // icono.style.width = '70px';
+                // icono.style.fontSize = '50px';
+                // btnCam.style.height = '90px';
+                // btnCam.style.width = '90px';
+                // iconoCam.style.height = '70px';
+                // iconoCam.style.width = '70px';
+                // iconoCam.style.fontSize = '50px';
+            }
+            // var goFS = document.getElementById('goFS');
+    
+        },
+        false,
+    );
+    </script> -->
+    <!-- <a href="#" onclick="downloadCanvasAsPng()">Download canvas PNG</a> -->
 </body>
+
 </html>
