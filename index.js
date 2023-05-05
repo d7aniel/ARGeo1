@@ -25,20 +25,32 @@ function main() {
   const mtl = new THREE.MeshPhongMaterial({ color: 0xff0000 });
   const box = new THREE.Mesh(geom, mtl);
 
-  const geom2 = new THREE.SphereGeometry(20, 20, 20);
-  const mtl2 = new THREE.MeshPhongMaterial({ color: 0x00ff00 });
-  const esfera = new THREE.Mesh(geom2, mtl2);
+  function iluminarConFoto(archivo) {
+    let iluminador = new THREE.PMREMGenerator(renderer);
+    iluminador.compileEquirectangularShader();
+    let escena = scene;
+    new THREE.TextureLoader().load(archivo, function (texture) {
+      var texturaCielo = iluminador.fromEquirectangular(texture);
+      //escena.background = texturaCielo.texture;
+      escena.environment = texturaCielo.texture;
+      texture.dispose();
+      iluminador.dispose();
+    });
+
+    let ambientLight = new THREE.AmbientLight(0x333333);
+    scene.add(ambientLight);
+  }
+
+  iluminarConFoto("luz.png");
 
   box.position.set(0, 30, 0);
 
   let pointLight = new THREE.PointLight(0xffffff);
-  pointLight.position.set(0, 30, 0);
+  pointLight.position.set(20, 40, 0);
 
   const objetoCompuesto = new THREE.Object3D();
-  objetoCompuesto.add(pointLight);
-  objetoCompuesto.add(esfera);
 
-  // cargarModelo("modelo1.glb", objetoCompuesto);
+  cargarModelo("modelo2.glb", objetoCompuesto);
 
   let ambientLight = new THREE.AmbientLight(0x333333);
   scene.add(ambientLight);
@@ -56,10 +68,6 @@ function main() {
       camera.aspect = aspect;
       camera.updateProjectionMatrix();
     }
-
-    objetoCompuesto.rotation.x += 0.01;
-    objetoCompuesto.rotation.y += 0.01;
-    objetoCompuesto.rotation.z += 0.01;
 
     cam.update();
     renderer.render(scene, camera);
